@@ -62,7 +62,10 @@ class VeoliaDataUpdateCoordinator(DataUpdateCoordinator):
             else:
                 # Regular fetch
                 LOGGER.debug("Periodic fetch - 2 months")
-                start_date = date(now.year, now.month - 1, 1)
+                if (now.month > 1):
+                    start_date = date(now.year, now.month - 1, 1)
+                else:
+                    start_date = date(now.year - 1, 12, 1)
                 end_date = date(now.year, now.month, 1)
 
             await self.client_api.fetch_all_data(start_date, end_date)
